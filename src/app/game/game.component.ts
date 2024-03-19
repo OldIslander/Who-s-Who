@@ -9,7 +9,19 @@ export class GameComponent implements OnInit {
 
   constructor() { }
 
+
+  guess: string = ''
   ngOnInit(): void {
   }
+
+
+  receiveGuess(valueEmitted: string) {
+    this.guess = valueEmitted;
+  }
+
+  onSubmit(){
+    console.log(this.guess);
+  }
+  
 
 }

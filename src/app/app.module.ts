@@ -8,11 +8,12 @@ import { HomeComponent } from "./home/home.component";
 import { ConfigComponent } from './config/config.component';
 import { GameComponent } from './game/game.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { TextInputComponent } from './components/text-input/text-input.component';
 
 const routes: Routes = [{ path: "", component: HomeComponent }];
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, ConfigComponent, GameComponent, LeaderboardComponent],
+  declarations: [AppComponent, HomeComponent, ConfigComponent, GameComponent, LeaderboardComponent, TextInputComponent],
   imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes)],
   providers: [],
   bootstrap: [AppComponent],
