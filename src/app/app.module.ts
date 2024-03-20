@@ -10,7 +10,7 @@ import { GameComponent } from './game/game.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { TextInputComponent } from './components/text-input/text-input.component';
 
-const routes: Routes = [{ path: "", component: HomeComponent }];
+const routes: Routes = [{ path: "", component: GameComponent }];
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, ConfigComponent, GameComponent, LeaderboardComponent, TextInputComponent],
