@@ -40,9 +40,9 @@ export class GameComponent implements OnInit {
     this.newAccess = await this.getToken();
     this.token = this.newAccess["access_token"]
 
-    let fartist = "Radiohead"
+    let artist = "Radiohead"
 
-    let result = await this.searchAndGet(fartist, '', this.token) 
+    let result = await this.searchAndGet(artist, '', this.token) 
 
     console.log(result)
   }
