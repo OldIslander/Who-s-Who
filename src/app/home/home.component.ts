@@ -6,6 +6,8 @@ const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";
 
+// localStorage.setItem('gameStateOne', 'timed');
+
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
@@ -20,7 +22,8 @@ export class HomeComponent implements OnInit {
   configLoading: boolean = false;
   token: String = "";
   gameMode: boolean = false;
-  cluesOn: boolean = true;
+  clueStatus: boolean = true;
+  
 
   ngOnInit(): void {
     this.authLoading = true;
