@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import fetchFromSpotify, { request } from "../../services/api";
+import { configService } from "src/services/config.service";
 
 const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
@@ -18,6 +19,8 @@ export class HomeComponent implements OnInit {
   authLoading: boolean = false;
   configLoading: boolean = false;
   token: String = "";
+  gameMode: boolean = false;
+  cluesOn: boolean = true;
 
   ngOnInit(): void {
     this.authLoading = true;
