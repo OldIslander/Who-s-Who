@@ -67,8 +67,8 @@ export class GameComponent implements OnInit {
       await this.stream.play()
      }
 
-     
-  }
+    }
+
 
   
 
