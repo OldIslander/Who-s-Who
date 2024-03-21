@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+const {Howl, Howler} = require('howler');
+import { dummyService } from 'src/dummy.service';
+
 
 interface access{
  "access_token": string;
@@ -14,7 +18,7 @@ interface access{
 })
 export class GameComponent implements OnInit {
 
-  constructor() { }
+  constructor(private DummyService: dummyService, private router: Router) { }
 
 
   guess: string = ''
@@ -22,6 +26,16 @@ export class GameComponent implements OnInit {
   newAccess: access = {"access_token": "", "token_type": "", "expires_in": 0}
 
   token: string = ""
+
+  scoreTotal: number = 0
+
+  score: number = 0
+
+  started: boolean = false
+
+  index: number = 0
+
+  stream: typeof Howl = {src: [''], volume: 0.25, ext: ['mp3'], autoplay: true, html5: true}
   
   
   
@@ -35,44 +49,27 @@ export class GameComponent implements OnInit {
   }
 
   async onSubmit(){
+    if(!this.started){
+      await this.DummyService.gameInit("rock")
+      console.log(this.DummyService.tracks[this.index].url)
+      let superUrl = this.DummyService.tracks[this.index].url
+      console.log(superUrl)
+      this.stream = new Howl({src: [superUrl], volume: 0.25, ext: ['mp3'], autoplay: true, html5: true});
+      this.started = true
+      this.index++
+      await this.stream.play()
+    }
     
+     else{
+      this.stream.stop()
+      this.stream = await new Howl({src: [this.DummyService.tracks[this.index].url], volume: 0.25, ext: ['mp3'], autoplay: true, html5: true})
+      this.index++
+      await this.stream.play()
+     }
 
-    this.newAccess = await this.getToken();
-    this.token = this.newAccess["access_token"]
+    }
 
-    let fartist = "Radiohead"
 
-    let result = await this.searchAndGet(fartist, '', this.token) 
-
-    console.log(result)
-  }
-
-  //Generates new access token
-  async getToken(){
-    const response = await fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      body: new URLSearchParams({
-        'grant_type': 'client_credentials',
-        'client_id': '6dde12d09c434d0a99d0baeb00444d11',
-        'client_secret': '955dbccffc34438090b0192211fb15ff'
-      })
-    });
-
-    return response.json()
-  }
-
-  //This will generate a search term, retrieve an indefinite number of track ids and store them in an array
-  async searchAndGet(artist: string = '', genre: string = '', token: string = ''){
-
-    let result = await fetch('https://api.spotify.com/v1/search?q=artist%3A' + artist +'&type=track&offset=10', {
-    headers: {
-    'Authorization': 'Bearer ' + token
-            }
-    });
-
-    return result.json()
-    
-  }
   
 
 }
