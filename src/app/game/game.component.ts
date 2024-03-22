@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 const {Howl, Howler} = require('howler');
 import { dummyService } from 'src/dummy.service';
+import { interval, take } from 'rxjs';
 
 
 interface access{
@@ -56,6 +57,12 @@ export class GameComponent implements OnInit {
 
   currentTrack: track = {title: '', url: '', artists: []}
 
+  gameMode: string = "lives"
+
+  lives: number = 5
+
+  gameOver: boolean = false
+
 
 
   
@@ -73,25 +80,48 @@ export class GameComponent implements OnInit {
   async start(){
     //resettin' variables
     this.clueIndex = 0
-    this.score = 0
+    this.score = 10
     this.scoreTotal = 0
     this.started = true;
     
     await this.DummyService.gameInit("rock")
-    this.makeClues(this.DummyService.tracks[this.index])
-    let superUrl = this.DummyService.tracks[this.index].url
+    this.currentTrack = this.DummyService.tracks[this.index]
+    this.makeClues(this.currentTrack)
+    let superUrl = this.currentTrack.url
     this.stream = new Howl({src: [superUrl], volume: 0.25, ext: ['mp3'], autoplay: true, html5: true});
     this.stream.play()
 
   }
 
   async onSubmit(){   
-    if (this.guess = this.DummyService.tracks[this.index].title){
+    if (this.guess === this.currentTrack.title){
+      this.next = true
+      this.scoreTotal += this.score
+      this.score = 10;
+    }
 
+    else{
+      this.lives--
+      if(this.lives === 0){
+        this.gameOver = true
+      }
     }
   }
 
   async skip(){
+    this.stream.stop()
+    this.index++
+    this.currentTrack = this.DummyService.tracks[this.index]
+    this.makeClues(this.currentTrack)
+    let superUrl = this.currentTrack.url
+    this.stream = new Howl({src: [superUrl], volume: 0.25, ext: ['mp3'], autoplay: true, html5: true});
+    this.score = 10
+    this.clueIndex = 0
+    this.stream.play()
+    console.log(this.currentTrack.title)
+  }
+
+  async onNext(){
 
   }
 
@@ -107,8 +137,9 @@ export class GameComponent implements OnInit {
     this.clues = [{body: '', show: false}, {body: '', show: false}, {body: '', show: false}]
     let special1 = Track.title.match(/\([A-Za-z]+\)/)
     let special2 =  Track.title.match(/feat[A-Za-z]+/)
+    let words = Track.title.split(/[ ]+/); //gets the potential words of a title
 
-    let clue1: clue = {body: "Title length: " + Track.title.length, show: false}
+    let clue1: clue = {body: "Title length: " + Track.title.length + ", Number of words: " + words.length, show: false}
     this.clues[0] = clue1
     
     let clue2: clue = {body: "Artists: " + Track.artists, show: false}
@@ -119,8 +150,5 @@ export class GameComponent implements OnInit {
     
     //let clue4: clue = {body: "Artist: " + Track.artists, show: false}
   }
-
-
-  
 
 }
