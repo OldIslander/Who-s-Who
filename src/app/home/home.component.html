@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500&display=swap" rel="stylesheet">
     <title>Document</title>
   </head>
   <body>
@@ -11,35 +14,40 @@
       <!-- Genre: -->
 
       <div class="header">
-        <div class="welcome-container">
+        <div class="header-container">
+          <div class="welcome">
           <h1>Welcome to Guess the Song!</h1>
+          </div>
         </div>
-        <div class="leaderboard-container">
-          <button class="leaderboard">Leaderboard</button>
+        <div class="header-container">
+          <a routerLink="leaderboard"><button class="leaderboard"><h1>Leaderboard</h1></button></a>
         </div>
       </div>
+
       <div class="config-container">
         <div class="config-title">
           <h2>Configure Your Game</h2>
         </div>
 
         <div class="settings-container">
-          <div class="gamemode-choice">
+          <div class="choice">
             <p>GAME MODE: <span id="normal-timed">Normal</span></p>
-            <button class="gamemode-btn" onclick="updateGameMode()"></button>
+            <button class="toggle-btn" onclick="updateGameMode()">Toggle</button>
           </div>
 
-          <div class="genre-choice">Genre</div>
+          <div class="choice">
+            <p>Genre</p>
           <select [(ngModel)]="selectedGenre" (ngModelChange)="setGenre($event)">
             <option [value]="">Select a genre</option>
             <option [value]="genre" *ngFor="let genre of genres">
               {{ genre }}
             </option>
           </select>
+        </div>
 
-          <div class="clues-choice">
+          <div class="choice">
             <p>CLUES: <span id="on-off">On</span></p>
-            <button class="clues-btn" onclick="updateClueStatus()"></button>
+            <button class="toggle-btn" onclick="updateClueStatus()">Toggle</button>
           </div>
         </div>
 
@@ -47,9 +55,9 @@
           <p>Description of the chosen gamemode</p>
         </div>
       </div>
-      
+
       <div class="play-button">
-        <button>PLAY</button>
+        <a routerLink="game"><button class="play-button">PLAY</button></a>
       </div>
     </div>
   </body>

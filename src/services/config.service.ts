@@ -1,21 +1,4 @@
 import { Injectable } from '@angular/core';
-// import { BehaviorSubject } from 'rxjs';
-
-
-// interface Genres {
-//     genres: [
-//         "rock",
-//         "rap",
-//         "pop",
-//         "country",
-//         "hip-hop",
-//         "jazz",
-//         "alternative",
-//         "j-pop",
-//         "k-pop",
-//         "emo"
-//       ]
-// }
 
 @Injectable({
     providedIn: 'root'

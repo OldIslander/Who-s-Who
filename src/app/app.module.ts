@@ -12,7 +12,11 @@ import { TextInputComponent } from './components/text-input/text-input.component
 import { dummyService} from '../dummy.service';
 import { configService } from "src/services/config.service";
 
-const routes: Routes = [{ path: "", component: GameComponent }];
+const routes: Routes = [
+  { path: "", component: HomeComponent },
+  { path: "game", component: GameComponent },
+  { path: "leaderboard", component: LeaderboardComponent }
+];
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, ConfigComponent, GameComponent, LeaderboardComponent, TextInputComponent],
