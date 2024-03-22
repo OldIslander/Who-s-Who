@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
     this.selectedGenre = selectedGenre;
     console.log(this.selectedGenre);
     console.log(TOKEN_KEY);
-    // localStorage.setItem('genre',selectedGenre);
+    localStorage.setItem('genre',selectedGenre);
   }
 
   updateClueStatus() {
@@ -110,7 +110,7 @@ export class HomeComponent implements OnInit {
     var x = document.getElementById("normal-timed");
     if ( x != null) { // wrap in if statment to make sure it is not null
       if (x.innerHTML === "Normal") {
-        x.innerHTML = "Timed";
+        x.innerHTML = "Endless";
       } else {
         x.innerHTML = "Normal";
       }

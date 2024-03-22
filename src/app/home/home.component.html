@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="header-container">
-          <a routerLink="leaderboard"><button class="leaderboard"><h1>Leaderboard</h1></button></a>
+          <a routerLink="/leaderboard"><button class="leaderboard"><h1>Leaderboard</h1></button></a>
         </div>
       </div>
 
@@ -32,7 +32,7 @@
         <div class="settings-container">
           <div class="choice">
             <p>GAME MODE: <span id="normal-timed">Normal</span></p>
-            <button class="toggle-btn" onclick="updateGameMode()">Toggle</button>
+            <button class="toggle-btn" (click)="updateGameMode()">Toggle</button>
           </div>
 
           <div class="choice">
@@ -47,7 +47,7 @@
 
           <div class="choice">
             <p>CLUES: <span id="on-off">On</span></p>
-            <button class="toggle-btn" onclick="updateClueStatus()">Toggle</button>
+            <button class="toggle-btn" (click)="updateClueStatus()">Toggle</button>
           </div>
         </div>
 
@@ -57,7 +57,7 @@
       </div>
 
       <div class="play-button">
-        <a routerLink="game"><button class="play-button">PLAY</button></a>
+        <a routerLink="/game"><button class="play-button">PLAY</button></a>
       </div>
     </div>
   </body>

@@ -25,19 +25,28 @@
       <p *ngIf = clues[1].show>{{clues[1].body}}</p>
       <p *ngIf = clues[2].show>{{clues[2].body}}</p>
     </div>
-
-      <h1 *ngIf = "guess === currentTrack.title">Correct! Hit Next</h1>
+    <div *ngIf = "guessMade">
+      <h1 *ngIf = "next">Correct! Hit Next</h1>
       <h1 *ngIf = "guess != currentTrack.title">Wrong. Try Again</h1>
+    </div>
+  </div>
 
-
-    <div id = "timer"></div>
-
-</div>
 
 <div *ngIf =  "gameOver" class = "gameOverScreen">
   <h1>GAME OVER</h1>
-  <h1>{{scoreTotal}}</h1>
+  <h1>Total Score: {{scoreTotal}}</h1>
+  <div *ngIf = "highscore">
+    <h2>That's a highscore! Enter your name:</h2>
+    <app-text-input (guessChange)="receiveName($event)"></app-text-input>
+    <button class="name-button" (click)="onNameSubmit()">Submit</button>
+
+  </div>
+  <a routerLink="/leaderboard"><button class="leaderboard-button">See Leaderboard</button></a>
+  <button class="restart-button" (click)="start()">Try Again</button>
+  <a routerLink="/"><button class="home-button">Back to Home</button></a>
 
 </div>
 
 </div>
+
+

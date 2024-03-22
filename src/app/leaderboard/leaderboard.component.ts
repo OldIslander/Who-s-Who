@@ -12,4 +12,8 @@ export class LeaderboardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  get(item:string){
+    return localStorage.getItem(item)
+  }
+
 }
