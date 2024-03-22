@@ -26,8 +26,9 @@ export class dummyService{
     //private tracks = new BehaviorSubject<string[]>([]);
     //currentTracks = this.tracks.asObservable();
 
-    private genre = new BehaviorSubject<string>('');
-    currentGenre = this.genre.asObservable();
+    genre : string = '';
+
+    maxClues: number = 4;
 
     //Generates new access token
   async getToken(){
@@ -73,7 +74,12 @@ export class dummyService{
         }
         
     }
-    
+
+    for (let i = this.tracks.length - 1; i > 0; i--) { 
+        const j = Math.floor(Math.random() * (i + 1)); 
+        [this.tracks[i], this.tracks[j]] = [this.tracks[j], this.tracks[i]]; 
+      }
+
     return this.tracks
   }
     

@@ -11,6 +11,15 @@ interface access{
 
 }
 
+interface clue{
+  body: string;
+  show: boolean
+}
+interface track{
+  title: string;
+  url: string;
+  artists: string[];
+}
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
@@ -35,7 +44,20 @@ export class GameComponent implements OnInit {
 
   index: number = 0
 
+  maxClues: number = 4
+
+  clues: clue[] = [{body: '', show: false}, {body: '', show: false}, {body: '', show: false}]
+
+  clueIndex: number = 0 //Keeps track of how many clues are shown
+
   stream: typeof Howl = {src: [''], volume: 0.25, ext: ['mp3'], autoplay: true, html5: true}
+
+  next: boolean = false
+
+  currentTrack: track = {title: '', url: '', artists: []}
+
+
+
   
   
   
@@ -48,26 +70,55 @@ export class GameComponent implements OnInit {
     this.guess = valueEmitted;
   }
 
-  async onSubmit(){
-    if(!this.started){
-      await this.DummyService.gameInit("rock")
-      console.log(this.DummyService.tracks[this.index].url)
-      let superUrl = this.DummyService.tracks[this.index].url
-      console.log(superUrl)
-      this.stream = new Howl({src: [superUrl], volume: 0.25, ext: ['mp3'], autoplay: true, html5: true});
-      this.started = true
-      this.index++
-      await this.stream.play()
-    }
+  async start(){
+    //resettin' variables
+    this.clueIndex = 0
+    this.score = 0
+    this.scoreTotal = 0
+    this.started = true;
     
-     else{
-      this.stream.stop()
-      this.stream = await new Howl({src: [this.DummyService.tracks[this.index].url], volume: 0.25, ext: ['mp3'], autoplay: true, html5: true})
-      this.index++
-      await this.stream.play()
-     }
+    await this.DummyService.gameInit("rock")
+    this.makeClues(this.DummyService.tracks[this.index])
+    let superUrl = this.DummyService.tracks[this.index].url
+    this.stream = new Howl({src: [superUrl], volume: 0.25, ext: ['mp3'], autoplay: true, html5: true});
+    this.stream.play()
+
+  }
+
+  async onSubmit(){   
+    if (this.guess = this.DummyService.tracks[this.index].title){
 
     }
+  }
+
+  async skip(){
+
+  }
+
+  async revealClue(){
+    if(this.clueIndex <= 2){
+      this.clues[this.clueIndex].show = true
+      this.clueIndex++
+    }
+
+  }
+
+  async makeClues(Track: track){
+    this.clues = [{body: '', show: false}, {body: '', show: false}, {body: '', show: false}]
+    let special1 = Track.title.match(/\([A-Za-z]+\)/)
+    let special2 =  Track.title.match(/feat[A-Za-z]+/)
+
+    let clue1: clue = {body: "Title length: " + Track.title.length, show: false}
+    this.clues[0] = clue1
+    
+    let clue2: clue = {body: "Artists: " + Track.artists, show: false}
+    this.clues[1] = clue2
+    
+    let clue3: clue = {body: "First Letter: " + Track.title.charAt(0) + ", and contains the following specials: " + special1 + ' ' + special2, show: false}
+    this.clues[2] = clue3
+    
+    //let clue4: clue = {body: "Artist: " + Track.artists, show: false}
+  }
 
 
   
