@@ -9,13 +9,14 @@ import { ConfigComponent } from './config/config.component';
 import { GameComponent } from './game/game.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { TextInputComponent } from './components/text-input/text-input.component';
+import { dummyService} from '../dummy.service';
 
 const routes: Routes = [{ path: "", component: GameComponent }];
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, ConfigComponent, GameComponent, LeaderboardComponent, TextInputComponent],
   imports: [BrowserModule, FormsModule, RouterModule.forRoot(routes)],
-  providers: [],
+  providers: [dummyService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
