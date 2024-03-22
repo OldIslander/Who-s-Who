@@ -1,12 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import fetchFromSpotify, { request } from "../../services/api";
+import { Router } from '@angular/router';
 import { configService } from "src/services/config.service";
 
 const AUTH_ENDPOINT =
   "https://nuod0t2zoe.execute-api.us-east-2.amazonaws.com/FT-Classroom/spotify-auth-token";
 const TOKEN_KEY = "whos-who-access-token";
 
-// localStorage.setItem('gameStateOne', 'timed');
+
 
 @Component({
   selector: "app-home",
@@ -14,15 +15,16 @@ const TOKEN_KEY = "whos-who-access-token";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor(private ConfigService: configService, private router: Router) {}
 
   genres: String[] = ["House", "Alternative", "J-Rock", "R&B"];
   selectedGenre: String = "";
   authLoading: boolean = false;
   configLoading: boolean = false;
   token: String = "";
-  gameMode: boolean = false;
-  clueStatus: boolean = true;
+
+  gameMode: boolean = false;  // False=Normal, True=Timed
+  clueStatus: boolean = true; //   False=Off,  True=On
   
 
   ngOnInit(): void {
@@ -49,6 +51,10 @@ export class HomeComponent implements OnInit {
       this.token = newToken.value;
       this.loadGenres(newToken.value);
     });
+    localStorage.setItem('clueStatus', this.clueStatus + ''); // or .toString()
+    // Don't need to check what it is, just tell it what it is
+
+    // localStorage.setItem('gameStateTwo', 'timed');
   }
 
   loadGenres = async (t: any) => {
@@ -84,5 +90,31 @@ export class HomeComponent implements OnInit {
     this.selectedGenre = selectedGenre;
     console.log(this.selectedGenre);
     console.log(TOKEN_KEY);
+    // localStorage.setItem('genre',selectedGenre);
   }
+
+  updateClueStatus() {
+    this.ConfigService.toggleClueStatus()
+    var x = document.getElementById("on-off");
+    if ( x != null) { // wrap in if statment to make sure it is not null
+      if (x.innerHTML === "On") {
+        x.innerHTML = "Off";
+      } else {
+        x.innerHTML = "On";
+      }
+    }
+  }
+
+  updateGameMode() {
+    this.ConfigService.toggleGameMode()
+    var x = document.getElementById("normal-timed");
+    if ( x != null) { // wrap in if statment to make sure it is not null
+      if (x.innerHTML === "Normal") {
+        x.innerHTML = "Timed";
+      } else {
+        x.innerHTML = "Normal";
+      }
+    }
+  }
+
 }

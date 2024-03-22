@@ -6,10 +6,9 @@
     <title>Document</title>
   </head>
   <body>
-
     <div *ngIf="authLoading || configLoading">Loading...</div>
     <div *ngIf="!authLoading && !configLoading">
-      Genre:
+      <!-- Genre: -->
 
       <div class="header">
         <div class="welcome-container">
@@ -23,18 +22,13 @@
         <div class="config-title">
           <h2>Configure Your Game</h2>
         </div>
+
         <div class="settings-container">
           <div class="gamemode-choice">
             <p>GAME MODE: <span id="normal-timed">Normal</span></p>
-            <button class="gamemode-btn" (click)="gameMode = !gameMode" onclick="functionGameMode()"></button>
-          <!-- 
-            <mat-button-toggle-group #toggleMode="matButtonToggleGroup">
-                <mat-button-toggle value="Normal Mode">Normal</mat-button-toggle>
-                <mat-button-toggle value="Timed Mode">Timed</mat-button-toggle>
-            </mat-button-toggle-group>
-            Current Choice: {{ toggleMode.value }}
-          -->
+            <button class="gamemode-btn" onclick="updateGameMode()"></button>
           </div>
+
           <div class="genre-choice">Genre</div>
           <select [(ngModel)]="selectedGenre" (ngModelChange)="setGenre($event)">
             <option [value]="">Select a genre</option>
@@ -42,43 +36,21 @@
               {{ genre }}
             </option>
           </select>
+
           <div class="clues-choice">
             <p>CLUES: <span id="on-off">On</span></p>
-            <button class="clues-btn" (click)="clueStatus = !clueStatus" onclick="functionOnOff()"></button>
-          <!-- 
-            <mat-button-toggle-group #toggleClues="matButtonToggleGroup">
-                <mat-button-toggle value="Clues On">On</mat-button-toggle>
-                <mat-button-toggle value="Clues Off">Off</mat-button-toggle>
-            </mat-button-toggle-group>
-            Current Choice: {{ toggleClues.value }}
-          -->
+            <button class="clues-btn" onclick="updateClueStatus()"></button>
           </div>
         </div>
+
         <div class="gamemode-description">
           <p>Description of the chosen gamemode</p>
         </div>
       </div>
+      
       <div class="play-button">
         <button>PLAY</button>
       </div>
     </div>
-    <script>
-      function functionOnOff() {
-        var x = document.getElementById("on-off");
-        if (x.innerHTML === "On") {
-          x.innerHTML = "Off";
-        } else {
-          x.innerHTML = "On";
-        }
-      }
-      function functionGameMode() {
-        var x = document.getElementById("normal-timed");
-        if (x.innerHTML === "Normal") {
-          x.innerHTML = "Timed";
-        } else {
-          x.innerHTML = "Normal";
-        }
-      }
-      </script>
   </body>
 </html>
