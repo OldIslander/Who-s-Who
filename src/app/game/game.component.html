@@ -8,26 +8,35 @@
 >
   <button *ngIf = "!started" class="start-button" (click)="start()">Start!</button>
 
-  <div *ngIf = "started" class = "game">
+  <div *ngIf = "started && !gameOver" class = "game">
     <div class = "game-ui">
+      <p class = "scoreTotal">{{scoreTotal}}</p>
+      <p class = "lives">Lives: {{lives}}</p>
       <app-text-input (guessChange)="receiveGuess($event)"></app-text-input>
       <br />
       <br />
      <button class="submit-button" (click)="onSubmit()">guess</button>
       <button class="skip-button" (click)="skip()">skip</button>
-      <button class="clue-button" (click)="revealClue()">clue</button>
+      <button class="clue-button" (click)="revealClue()">clue(-1 question score)</button>
     </div>
+    <button *ngIf = "next" class="next-button" (click)="onNext()">Next Song</button>
     <div class = "clue-section">
       <p *ngIf = clues[0].show >{{clues[0].body}}</p>
       <p *ngIf = clues[1].show>{{clues[1].body}}</p>
       <p *ngIf = clues[2].show>{{clues[2].body}}</p>
     </div>
 
-     <div *ngIf = "guess != ''" class = "guessMessage">
       <h1 *ngIf = "guess === currentTrack.title">Correct! Hit Next</h1>
       <h1 *ngIf = "guess != currentTrack.title">Wrong. Try Again</h1>
 
-    </div>
+
+    <div id = "timer"></div>
+
+</div>
+
+<div *ngIf =  "gameOver" class = "gameOverScreen">
+  <h1>GAME OVER</h1>
+  <h1>{{scoreTotal}}</h1>
 
 </div>
 
