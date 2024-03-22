@@ -93,19 +93,22 @@ export class GameComponent implements OnInit {
 
   }
 
-  async onSubmit(){   
-    if (this.guess === this.currentTrack.title){
-      this.next = true
-      this.scoreTotal += this.score
-      this.score = 10;
-    }
-
-    else{
-      this.lives--
-      if(this.lives === 0){
-        this.gameOver = true
+  async onSubmit(){ 
+    if(!this.next){
+      if (this.guess === this.currentTrack.title){
+        this.next = true
+        this.scoreTotal += this.score
+        this.score = 10;
       }
-    }
+  
+      else{
+        this.lives--
+        if(this.lives === 0){
+          this.gameOver = true
+        }
+      }
+    }  
+    
   }
 
   async skip(){
@@ -122,6 +125,17 @@ export class GameComponent implements OnInit {
   }
 
   async onNext(){
+    this.stream.stop()
+    this.index++
+    this.currentTrack = this.DummyService.tracks[this.index]
+    this.makeClues(this.currentTrack)
+    let superUrl = this.currentTrack.url
+    this.stream = new Howl({src: [superUrl], volume: 0.25, ext: ['mp3'], autoplay: true, html5: true});
+    this.score = 10
+    this.clueIndex = 0
+    this.stream.play()
+    console.log(this.currentTrack.title)
+    this.next = false
 
   }
 
@@ -129,13 +143,14 @@ export class GameComponent implements OnInit {
     if(this.clueIndex <= 2){
       this.clues[this.clueIndex].show = true
       this.clueIndex++
+      this.score--
     }
 
   }
 
   async makeClues(Track: track){
     this.clues = [{body: '', show: false}, {body: '', show: false}, {body: '', show: false}]
-    let special1 = Track.title.match(/\([A-Za-z]+\)/)
+    let special1 = Track.title.match(/\([A-Z\sa-z]+\)/)
     let special2 =  Track.title.match(/feat[A-Za-z]+/)
     let words = Track.title.split(/[ ]+/); //gets the potential words of a title
 
